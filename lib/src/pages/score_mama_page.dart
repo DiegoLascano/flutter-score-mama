@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:score_mama/src/bloc/data_provider.dart';
+import 'package:score_mama/src/bloc/bloc_provider.dart';
 import 'package:score_mama/src/providers/data_provider.dart';
 import 'package:score_mama/src/widgets/results_card_widget.dart';
 
@@ -95,8 +95,8 @@ class _ScoreMamaState extends State<ScoreMama> {
 
   @override
   Widget build(BuildContext context) {
-    final _screenSize = MediaQuery.of(context).size;
-    final bloc = DataProvider.of(context);
+    // final _screenSize = MediaQuery.of(context).size;
+    final bloc = BlocProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Score Mamá'),
@@ -253,7 +253,7 @@ class _ScoreMamaState extends State<ScoreMama> {
           // child: Text('test'),
           child: Column(
             children: <Widget>[
-              _weeksSelector(),
+              _weeksSelector(bloc),
               Divider(thickness: 1.0),
               _altitudSelector(),
               Divider(thickness: 1.0),
@@ -280,20 +280,27 @@ class _ScoreMamaState extends State<ScoreMama> {
     );
   }
 
-  Widget _weeksSelector() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text('20 o más semanas de embarazo?'),
-        Checkbox(
-          value: _weeksEnabled,
-          onChanged: (value) {
-            setState(() {
-              _weeksEnabled = value;
-            });
-          },
-        ),
-      ],
+  Widget _weeksSelector(ScoreMamaBloc bloc) {
+    return StreamBuilder(
+      stream: bloc.semanasStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Text('20 o más semanas de embarazo?'),
+            Checkbox(
+              value: _weeksEnabled,
+              onChanged: (value) {
+                bloc.changeSemanas(value);
+                // print(bloc.proteinuria);
+                setState(() {
+                  _weeksEnabled = value;
+                });
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -336,12 +343,12 @@ class _ScoreMamaState extends State<ScoreMama> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Frecuencia Cardíaca'),
+          Text('Frecuencia cardíaca'),
           Row(
             children: <Widget>[
               _frecuenciaCardiacaDropdown(bloc),
               SizedBox(width: 5.0),
-              Text('mmHg'),
+              Text('lat/m'),
             ],
           ),
         ],
@@ -369,7 +376,7 @@ class _ScoreMamaState extends State<ScoreMama> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Presión Sistólica'),
+          Text('Presión sistólica'),
           Row(
             children: <Widget>[
               _presionSistolicaDropdown(bloc),
@@ -402,7 +409,7 @@ class _ScoreMamaState extends State<ScoreMama> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Presión Diastólica'),
+          Text('Presión diastólica'),
           Row(
             children: <Widget>[
               _presionDiastolicaDropdown(bloc),
@@ -435,12 +442,12 @@ class _ScoreMamaState extends State<ScoreMama> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Frecuencia Respiratoria'),
+          Text('Frecuencia respiratoria'),
           Row(
             children: <Widget>[
               _frecuenciaRespiratoriaDropdown(bloc),
               SizedBox(width: 5.0),
-              Text('mmHg'),
+              Text('res/m'),
             ],
           ),
         ],
@@ -473,7 +480,7 @@ class _ScoreMamaState extends State<ScoreMama> {
             children: <Widget>[
               _temperaturaDropdown(bloc),
               SizedBox(width: 5.0),
-              Text('C'),
+              Text('°C'),
             ],
           ),
         ],
@@ -501,12 +508,12 @@ class _ScoreMamaState extends State<ScoreMama> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text('Saturación'),
+          Text('Saturación de oxígeno'),
           Row(
             children: <Widget>[
               _saturacionDropdown(bloc),
               SizedBox(width: 5.0),
-              Text('C'),
+              Text('%'),
             ],
           ),
         ],
@@ -539,12 +546,6 @@ class _ScoreMamaState extends State<ScoreMama> {
             child: Text('Estado de conciencia'),
           ),
           _concienciaDropdown(bloc),
-          // Row(
-          //   children: <Widget>[
-          //     SizedBox(width: 5.0),
-          //     Text('C'),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -555,7 +556,7 @@ class _ScoreMamaState extends State<ScoreMama> {
       stream: bloc.concienciaStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return DropdownButton(
-          isDense: true,
+          isDense: false,
           value: bloc.conciencia,
           items: getDropdownOptions(_concienciaOptions),
           onChanged: bloc.changeConciencia,
@@ -571,13 +572,7 @@ class _ScoreMamaState extends State<ScoreMama> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text('Proteinuria'),
-          Row(
-            children: <Widget>[
-              _proteinuriaDropdown(bloc),
-              SizedBox(width: 5.0),
-              Text('C'),
-            ],
-          ),
+          _proteinuriaDropdown(bloc),
         ],
       ),
     );
@@ -642,12 +637,11 @@ class _ScoreMamaState extends State<ScoreMama> {
     score += _concienciaItems
         .where((item) => item['option'] == bloc.conciencia ? true : false)
         .toList()[0]['score'];
-    if (_weeksEnabled) {
+    if (_weeksEnabled && bloc.proteinuria != null) {
       score += _proteinuriaItems
           .where((item) => item['option'] == bloc.proteinuria ? true : false)
           .toList()[0]['score'];
     }
-    print(score);
     setState(() {
       scoreResult = score;
     });

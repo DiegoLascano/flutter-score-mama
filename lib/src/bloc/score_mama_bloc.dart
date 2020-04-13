@@ -11,7 +11,7 @@ class ScoreMamaBloc {
   final _saturacionController = BehaviorSubject<String>();
   final _concienciaController = BehaviorSubject<String>();
   final _proteinuriaController = BehaviorSubject<String>();
-  // final _semanasController = BehaviorSubject<String>();
+  final _semanasController = BehaviorSubject<bool>();
 
   // Fetch data from stream
   Stream<String> get frecuenciaCardiacaStream =>
@@ -26,9 +26,9 @@ class ScoreMamaBloc {
   Stream<String> get saturacionStream => _saturacionController.stream;
   Stream<String> get concienciaStream => _concienciaController.stream;
   Stream<String> get proteinuriaStream => _proteinuriaController.stream;
-  // Stream<String> get semanasStream => _semanasController.stream;
+  Stream<bool> get semanasStream => _semanasController.stream;
 
-  Stream<bool> get formValidStream1 => Rx.combineLatest7(
+  Stream<bool> get formValidStream => CombineLatestStream.combine7(
       frecuenciaCardiacaStream,
       presionSistolicaStream,
       presionDiastolicaStream,
@@ -37,9 +37,6 @@ class ScoreMamaBloc {
       saturacionStream,
       concienciaStream,
       (fc, ps, pd, fr, t, sat, c) => true);
-
-  Stream<bool> get formValidStream =>
-      Rx.combineLatest2(formValidStream1, proteinuriaStream, (fv1, p) => true);
 
   // Insert values to the stream
   Function(String) get changeFrecuenciaCardiaca =>
@@ -54,6 +51,7 @@ class ScoreMamaBloc {
   Function(String) get changeSaturacion => _saturacionController.sink.add;
   Function(String) get changeConciencia => _concienciaController.sink.add;
   Function(String) get changeProteinuria => _proteinuriaController.sink.add;
+  Function(bool) get changeSemanas => _semanasController.sink.add;
 
   // Get last value of the streams
   String get frecuenciaCardiaca => _frecuenciaCardiacaController.value;
@@ -64,6 +62,7 @@ class ScoreMamaBloc {
   String get saturacion => _saturacionController.value;
   String get conciencia => _concienciaController.value;
   String get proteinuria => _proteinuriaController.value;
+  bool get semanas => _semanasController.value;
 
   dispose() {
     _frecuenciaCardiacaController?.close();
@@ -74,5 +73,6 @@ class ScoreMamaBloc {
     _saturacionController?.close();
     _concienciaController?.close();
     _proteinuriaController?.close();
+    _semanasController?.close();
   }
 }

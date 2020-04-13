@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:score_mama/src/bloc/data_provider.dart';
+import 'package:score_mama/src/bloc/bloc_provider.dart';
 
 import 'package:score_mama/src/routes/routes.dart';
 
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DataProvider(
+    return BlocProvider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
