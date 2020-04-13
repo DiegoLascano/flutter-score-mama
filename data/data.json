@@ -1,0 +1,159 @@
+{
+  "appName": "Fórmulas Médicas",
+  "data": [{
+    "frecuenciaCardiaca": [{
+        "option": "≤50",
+        "score": 3
+      },
+      {
+        "option": "51-59",
+        "score": 1
+      },
+      {
+        "option": "60-100",
+        "score": 0
+      },
+      {
+        "option": "101-110",
+        "score": 1
+      },
+      {
+        "option": "111-119",
+        "score": 2
+      },
+      {
+        "option": "≥120",
+        "score": 3
+      }
+    ],
+    "sistolica": [{
+        "option": "≤70",
+        "score": 3
+      },
+      {
+        "option": "71-89",
+        "score": 2
+      },
+      {
+        "option": "90-139",
+        "score": 0
+      },
+      {
+        "option": "140-159",
+        "score": 2
+      },
+      {
+        "option": "≥160",
+        "score": 3
+      }
+    ],
+    "diastolica": [{
+        "option": "≤50",
+        "score": 3
+      },
+      {
+        "option": "51-59",
+        "score": 2
+      },
+      {
+        "option": "60-85",
+        "score": 0
+      },
+      {
+        "option": "86-89",
+        "score": 1
+      },
+      {
+        "option": "90-109",
+        "score": 2
+      },
+      {
+        "option": "≥110",
+        "score": 3
+      }
+    ],
+    "frecuenciaRespitatoria": [{
+        "option": "≤11",
+        "score": 3
+      },
+      {
+        "option": "12-22",
+        "score": 0
+      },
+      {
+        "option": "23-29",
+        "score": 2
+      },
+      {
+        "option": "≥30",
+        "score": 3
+      }
+    ],
+    "temperatura": [{
+        "option": "≤35.5",
+        "score": 2
+      },
+      {
+        "option": "35.6-37.5",
+        "score": 0
+      },
+      {
+        "option": "37.6-38.4",
+        "score": 1
+      },
+      {
+        "option": "≥38.5",
+        "score": 3
+      }
+    ],
+    "saturacion": [{
+        "option": "≤85",
+        "score": 3
+      },
+      {
+        "option": "86-89",
+        "score": 2
+      },
+      {
+        "option": "90-93",
+        "score": 1
+      },
+      {
+        "option": "94-100",
+        "score": 0
+      }
+    ],
+    "conciencia": [{
+        "option": "Confusa/agitada",
+        "score": 2
+      },
+      {
+        "option": "Alerta",
+        "score": 0
+      },
+      {
+        "option": "Responde a la voz/somnolienta",
+        "score": 1
+
+      },
+      {
+        "option": "Responde al dolor/estuporosa",
+        "score": 2
+
+      },
+      {
+        "option": "No responde",
+        "score": 3
+      }
+    ],
+    "proteinuria": [{
+        "option": "Negativo",
+        "score": 0
+      },
+      {
+        "option": "Positivo",
+        "score": 1
+      }
+    ]
+  }]
+}
