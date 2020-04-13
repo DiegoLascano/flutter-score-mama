@@ -183,7 +183,7 @@ class _GestationalAgeState extends State<GestationalAge> {
     );
   }
 
-  _selectDate(BuildContext context) async {
+  void _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
       context: context,
       locale: Locale('es', 'ES'),
@@ -200,7 +200,7 @@ class _GestationalAgeState extends State<GestationalAge> {
     _calcDates();
   }
 
-  _calcDates() {
+  void _calcDates() {
     Duration difference = DateTime.now().difference(_pickedDate);
     int totalDays = difference.inDays;
     DateTime _fpp = _pickedDate.add(Duration(days: 280));

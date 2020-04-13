@@ -17,7 +17,7 @@ class ResultsCard extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
         child: Container(
-          width: _screenSize.width * 0.7,
+          width: _screenSize.width * 1.0,
           padding: EdgeInsets.all(20.0),
           decoration: BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.7),
@@ -37,8 +37,8 @@ class ResultsCard extends StatelessWidget {
                   //     fontWeight: FontWeight.bold),
                 ),
               ),
-              SizedBox(height: 20.0),
-              content,
+              SizedBox(height: 10.0),
+              content
             ],
           ),
         ),

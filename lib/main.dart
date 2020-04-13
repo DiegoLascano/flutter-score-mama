@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:score_mama/src/bloc/data_provider.dart';
 
 import 'package:score_mama/src/routes/routes.dart';
 
@@ -25,31 +26,33 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', 'US'),
-        const Locale('es', 'ES'),
-      ],
-      title: 'Score Mamá',
-      initialRoute: 'navigation_page',
-      routes: getApplicationRoutes(),
-      theme: ThemeData(
-        primaryColor: Color(0xFF14919B),
-        accentColor: Color(0xFF14919B),
-        primarySwatch: buttonTextColor,
-        textTheme: TextTheme(
-          title: TextStyle(
+    return DataProvider(
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          const Locale('en', 'US'),
+          const Locale('es', 'ES'),
+        ],
+        title: 'Score Mamá',
+        initialRoute: 'navigation_page',
+        routes: getApplicationRoutes(),
+        theme: ThemeData(
+          primaryColor: Color(0xFF14919B),
+          accentColor: Color(0xFF14919B),
+          primarySwatch: buttonTextColor,
+          textTheme: TextTheme(
+            title: TextStyle(
+                color: Color(0xFF323F4B),
+                // fontSize: 25.0,
+                fontWeight: FontWeight.bold),
+            subhead: TextStyle(
               color: Color(0xFF323F4B),
-              // fontSize: 25.0,
-              fontWeight: FontWeight.bold),
-          subhead: TextStyle(
-            color: Color(0xFF323F4B),
-            // fontSize: 30.0,
+              // fontSize: 30.0,
+            ),
           ),
         ),
       ),
