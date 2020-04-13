@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:score_mama/src/pages/about_page.dart';
 import 'package:score_mama/src/pages/home_page.dart';
+import 'package:score_mama/src/pages/test_stfull.dart';
 
 class NavigationPage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     AboutPage(),
+    TestPage(),
   ];
 
   @override
@@ -44,6 +46,10 @@ class _NavigationPageState extends State<NavigationPage> {
           BottomNavigationBarItem(
             title: Container(),
             icon: Icon(Icons.info, size: 30.0),
+          ),
+          BottomNavigationBarItem(
+            title: Container(),
+            icon: Icon(Icons.text_fields, size: 30.0),
           ),
         ],
         currentIndex: _selectedIndex,
