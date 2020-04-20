@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:score_mama/src/pages/about_page.dart';
-import 'package:score_mama/src/pages/home_page.dart';
-import 'package:score_mama/src/pages/test_stfull.dart';
+import 'package:calcu_obstetrica/src/pages/about_page.dart';
+import 'package:calcu_obstetrica/src/pages/home_page.dart';
+// import 'package:score_mama/src/pages/test_stfull.dart';
 
 class NavigationPage extends StatefulWidget {
   @override
@@ -15,7 +15,7 @@ class _NavigationPageState extends State<NavigationPage> {
   final List<Widget> _pages = [
     HomePage(),
     AboutPage(),
-    TestPage(),
+    // TestPage(),
   ];
 
   @override
@@ -47,10 +47,10 @@ class _NavigationPageState extends State<NavigationPage> {
             title: Container(),
             icon: Icon(Icons.info, size: 30.0),
           ),
-          BottomNavigationBarItem(
-            title: Container(),
-            icon: Icon(Icons.text_fields, size: 30.0),
-          ),
+          // BottomNavigationBarItem(
+          //   title: Container(),
+          //   icon: Icon(Icons.text_fields, size: 30.0),
+          // ),
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,

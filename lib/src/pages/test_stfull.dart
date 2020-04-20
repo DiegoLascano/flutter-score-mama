@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:score_mama/src/providers/data_provider.dart';
+import 'package:calcu_obstetrica/src/providers/data_provider.dart';
 
 class TestPage extends StatefulWidget {
   @override

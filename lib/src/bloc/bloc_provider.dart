@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:score_mama/src/bloc/score_mama_bloc.dart';
-export 'package:score_mama/src/bloc/score_mama_bloc.dart';
+import 'package:calcu_obstetrica/src/bloc/score_mama_bloc.dart';
+export 'package:calcu_obstetrica/src/bloc/score_mama_bloc.dart';
 
 class BlocProvider extends InheritedWidget {
   final loginBloc = ScoreMamaBloc();
