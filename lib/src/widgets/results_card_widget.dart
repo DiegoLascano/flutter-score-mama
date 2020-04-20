@@ -1,6 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+
+import 'dart:ui';
 
 class ResultsCard extends StatelessWidget {
   final Widget content;
@@ -31,10 +31,6 @@ class ResultsCard extends StatelessWidget {
                 child: Text(
                   title,
                   style: Theme.of(context).textTheme.subhead,
-                  // style: TextStyle(
-                  //     fontSize: 16.0,
-                  //     color: Color.fromRGBO(4, 78, 84, 1.0),
-                  //     fontWeight: FontWeight.bold),
                 ),
               ),
               SizedBox(height: 10.0),
