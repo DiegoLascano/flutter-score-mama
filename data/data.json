@@ -154,6 +154,141 @@
         "option": "Positivo",
         "score": 1
       }
+    ],
+    "establecimientos": [{
+        "type": "AB",
+        "option": "Puesto de salud, Centros de salud tipo A, B, y de atención prehospitalaria"
+      },
+      {
+        "type": "C",
+        "option": "Establecimientos Tipo C y hospitales básicos"
+      }
+    ],
+    "procedures": [{
+        "type": "AB",
+        "options": [{
+            "scoreA": 0,
+            "scoreB": 1,
+            "data": {
+              "title": "Evaluar y analizar factores de riesgo, bienestar materno-fetal y signos de alarma",
+              "actions": []
+            }
+          },
+          {
+            "scoreA": 1,
+            "scoreB": 2,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/4 horas y registre.",
+                "Reevalúe signos vitales y signos de alarma materna.",
+                "Evalúe factores de riesgo.",
+                "Realice pruebas de bienestar fetal básicas utilizando estetoscopio, doppler fetal o campana de Pinard.",
+                "Considere exámenes complementarios y/o evaluación por interconsulta con especialiasta.",
+                "Si se revierte el puntaje, envíe a la casa y realice seguimiento (agendar cita)."
+              ]
+            }
+          },
+          {
+            "scoreA": 2,
+            "scoreB": 5,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/hora y registre.",
+                "Reevalúe signos vitales y signos de alarma materna.",
+                "Realice un diagnóstico primario basado en el cuadro clínico.",
+                "Realice pruebas de bienestar fetal básicas utilizando estetoscopio, doppler fetal o campana de Pinard.",
+                "Aliste, active y aplique CLAVE AZUL, ROJA o AMARILLA según sea el caso.",
+                "Elabore hoja de referencia (053) y envíe a nivel de mayor capacidad resolutiva según el caso.",
+                "Transfiera acompañada de un profesional de salud.",
+                "Active cadena de llamadas: comunique al Director del Establecimiento de salud y éste al Director Distrital.",
+                "Realice seguimiento según el caso."
+              ]
+            }
+          },
+          {
+            "scoreA": 5,
+            "scoreB": 200,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/30 minutos y registre.",
+                "Reevalúe signos vitales y signos de alarma materna.",
+                "Realice pruebas de bienestar fetal básicas utilizando estetoscopio, doppler fetal o campana de Pinard.",
+                "Aliste, active y aplique CLAVE AZUL, ROJA o AMARILLA según sea el caso.",
+                "Elabore hoja de referencia (053) y envíe a establecimiento de salud de mayor complejidad según la emergencia obstétrica.",
+                "Transfiera acompañada de un profesional de salud.",
+                "Active cadena de llamadas: comunique al Director del Establecimiento de salud y éste al Director Distrital o Coordinador Zonal.",
+                "Realice seguimiento según el caso."
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "type": "C",
+        "options": [{
+            "scoreA": 0,
+            "scoreB": 1,
+            "data": {
+              "title": "Evaluar y analizar factores de riesgo, bienestar materno-fetal y signos de alarma",
+              "actions": []
+            }
+          },
+          {
+            "scoreA": 1,
+            "scoreB": 2,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/4 horas y registre.",
+                "Reevalúe signos vitales.",
+                "Evalúe factores de riesgo y signos de alarma materna.",
+                "Realice pruebas de bienestar fetal básicas utilizando estetoscopio, doppler fetal o campana de Pinard.",
+                "Considere exámenes complementarios y/o evaluación por interconsulta con especialiasta.",
+                "Si se revierte el puntaje, envíe a la casa y realice seguimiento (agendar cita)."
+              ]
+            }
+          },
+          {
+            "scoreA": 2,
+            "scoreB": 5,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/hora y registre.",
+                "Reevalúe signos vitales y signos de alarma.",
+                "Realice un diagnóstico primario basado en el cuadro clínico.",
+                "Comunique al médico tratante quien debe evaluar en máximo 30 minutos.",
+                "Aliste, active y aplique CLAVE AZUL, ROJA o AMARILLA según sea el caso.",
+                "Si no revierte el puntaje en una hora, evalúe signos de alarma materna y bienestar fetal; realice referencia a establecimiento de mayor complejidad, dependiendo del tipo de complicación obstétrica.",
+                "Transfiera acompañada de un profesional de salud según el caso.",
+                "Active cadena de llamadas: comunique al Director del Establecimiento de salud y éste al Director Distrital o Coordinador Zonal.",
+                "Si se revierte el puntaje, use los pasos correspondientes."
+              ]
+            }
+          },
+          {
+            "scoreA": 5,
+            "scoreB": 200,
+            "data": {
+              "title": "Evalúe y analice factores de riesgo",
+              "actions": [
+                "Aplique el Score MAMÁ c/30 minutos y registre.",
+                "Reevalúe signos vitales y signos de alarma.",
+                "Realice un diagnóstico primario basado en el cuadro clínico.",
+                "Comunique al médico tratante quien debe evaluar en máximo 15 minutos.",
+                "Aliste, active y aplique CLAVE AZUL, ROJA o AMARILLA según sea el caso.",
+                "Si no revierte el puntaje en 30 minutos, evalúe signos de alarma materna y bienestar fetal; realice referencia a establecimiento de mayor complejidad, dependiendo del tipo de complicación obstétrica.",
+                "Transfiera acompañada de un profesional de salud a nivel superior según sea el caso.",
+                "Active cadena de llamadas: comunique al Director del Establecimiento de salud y éste al Director Distrital o Coordinador Zonal.",
+                "Si se revierte el puntaje, use los pasos correspondientes."
+              ]
+            }
+          }
+        ]
+      }
     ]
   }]
 }

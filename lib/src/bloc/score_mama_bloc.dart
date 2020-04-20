@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 
 class ScoreMamaBloc {
+  final _scoreMamaController = BehaviorSubject<int>();
   final _frecuenciaCardiacaController = BehaviorSubject<String>();
   final _presionSistolicaController = BehaviorSubject<String>();
   final _presionDiastolicaController = BehaviorSubject<String>();
@@ -12,8 +13,10 @@ class ScoreMamaBloc {
   final _concienciaController = BehaviorSubject<String>();
   final _proteinuriaController = BehaviorSubject<String>();
   final _semanasController = BehaviorSubject<bool>();
+  final _establecimientoController = BehaviorSubject<String>();
 
   // Fetch data from stream
+  Stream<int> get scoreMamaStream => _scoreMamaController.stream;
   Stream<String> get frecuenciaCardiacaStream =>
       _frecuenciaCardiacaController.stream;
   Stream<String> get presionSistolicaStream =>
@@ -27,6 +30,7 @@ class ScoreMamaBloc {
   Stream<String> get concienciaStream => _concienciaController.stream;
   Stream<String> get proteinuriaStream => _proteinuriaController.stream;
   Stream<bool> get semanasStream => _semanasController.stream;
+  Stream<String> get establecimientoStream => _establecimientoController.stream;
 
   Stream<bool> get formValidStream => CombineLatestStream.combine7(
       frecuenciaCardiacaStream,
@@ -39,6 +43,7 @@ class ScoreMamaBloc {
       (fc, ps, pd, fr, t, sat, c) => true);
 
   // Insert values to the stream
+  Function(int) get changeScoreMama => _scoreMamaController.sink.add;
   Function(String) get changeFrecuenciaCardiaca =>
       _frecuenciaCardiacaController.sink.add;
   Function(String) get changePresionSistolica =>
@@ -52,8 +57,11 @@ class ScoreMamaBloc {
   Function(String) get changeConciencia => _concienciaController.sink.add;
   Function(String) get changeProteinuria => _proteinuriaController.sink.add;
   Function(bool) get changeSemanas => _semanasController.sink.add;
+  Function(String) get changeEstablecimiento =>
+      _establecimientoController.sink.add;
 
   // Get last value of the streams
+  int get scoreMama => _scoreMamaController.value;
   String get frecuenciaCardiaca => _frecuenciaCardiacaController.value;
   String get presionSistolica => _presionSistolicaController.value;
   String get presionDiastolica => _presionDiastolicaController.value;
@@ -63,8 +71,10 @@ class ScoreMamaBloc {
   String get conciencia => _concienciaController.value;
   String get proteinuria => _proteinuriaController.value;
   bool get semanas => _semanasController.value;
+  String get establecimiento => _establecimientoController.value;
 
   dispose() {
+    _scoreMamaController?.close();
     _frecuenciaCardiacaController?.close();
     _presionSistolicaController?.close();
     _presionDiastolicaController?.close();
@@ -74,5 +84,6 @@ class ScoreMamaBloc {
     _concienciaController?.close();
     _proteinuriaController?.close();
     _semanasController?.close();
+    _establecimientoController?.close();
   }
 }

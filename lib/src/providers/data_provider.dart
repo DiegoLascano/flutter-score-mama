@@ -75,6 +75,22 @@ class _DataProvider {
 
     return _proteinuriaOptions;
   }
+
+  Future<List<dynamic>> loadEstablecimiento() async {
+    List<dynamic> _establecimientosOptions = [];
+    Map dataMap = await loadData();
+    _establecimientosOptions = dataMap['establecimientos'];
+
+    return _establecimientosOptions;
+  }
+
+  Future<List<dynamic>> loadProcedures() async {
+    List<dynamic> _proceduresOptions = [];
+    Map dataMap = await loadData();
+    _proceduresOptions = dataMap['procedures'];
+
+    return _proceduresOptions;
+  }
 }
 
 final dataProvider = new _DataProvider();
