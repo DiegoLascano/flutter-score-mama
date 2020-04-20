@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:score_mama/src/bloc/bloc_provider.dart';
+import 'package:calcu_obstetrica/src/bloc/bloc_provider.dart';
 
-import 'package:score_mama/src/routes/routes.dart';
+import 'package:calcu_obstetrica/src/routes/routes.dart';
 
 void main() => runApp(MyApp());
 
