@@ -1,4 +1,4 @@
-package com.example.score_mama
+package com.nextechdevelopment.calculadoraobstetrica
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
