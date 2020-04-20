@@ -1,10 +1,15 @@
+import 'package:flutter/material.dart';
+
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:score_mama/src/widgets/results_card_widget.dart';
-import 'package:score_mama/src/widgets/score_box_widget.dart';
+import 'package:calcu_obstetrica/src/widgets/results_card_widget.dart';
+import 'package:calcu_obstetrica/src/widgets/score_box_widget.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:flutter_native_admob/native_admob_options.dart';
 
 class GestationalAge extends StatefulWidget {
   @override
@@ -12,6 +17,13 @@ class GestationalAge extends StatefulWidget {
 }
 
 class _GestationalAgeState extends State<GestationalAge> {
+  final _nativeAdController = NativeAdmobController();
+  double _nativeAdHeight = 0;
+  // Test ID
+  static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+
+  StreamSubscription _subscription;
+
   int _weeks = 0;
   int _days = 0;
   String _parsedDate = '';
@@ -20,6 +32,38 @@ class _GestationalAgeState extends State<GestationalAge> {
   DateTime _pickedDate = new DateTime.now();
 
   TextEditingController _fumDateController = new TextEditingController();
+
+  void _onStateChanged(AdLoadState state) {
+    switch (state) {
+      case AdLoadState.loading:
+        setState(() {
+          _nativeAdHeight = 0;
+        });
+        break;
+
+      case AdLoadState.loadCompleted:
+        setState(() {
+          _nativeAdHeight = 160;
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  @override
+  void initState() {
+    _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    _nativeAdController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +95,8 @@ class _GestationalAgeState extends State<GestationalAge> {
                   ),
                   'Edad Gestacional',
                 ),
-                SizedBox(height: 30.0),
+                SizedBox(height: 20.0),
+                _createNativeAd(),
                 ResultsCard(
                   Text(
                     _fppDate,
@@ -209,5 +254,32 @@ class _GestationalAgeState extends State<GestationalAge> {
       _days = totalDays % 7;
       _fppDate = new DateFormat.yMMMd('es_ES').format(_fpp).toString();
     });
+  }
+
+  Widget _createNativeAd() {
+    return Container(
+      height: _nativeAdHeight,
+      padding: EdgeInsets.all(20.0),
+      margin: EdgeInsets.only(bottom: (_nativeAdHeight * 2 / 16)),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0.6),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(0.0),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: NativeAdmob(
+            error: Text('Error al cargar el anuncio'),
+            adUnitID: _nativeUnitID,
+            controller: _nativeAdController,
+            options: NativeAdmobOptions(
+              showMediaContent: true,
+              ratingColor: Colors.amberAccent,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

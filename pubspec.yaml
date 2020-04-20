@@ -1,4 +1,4 @@
-name: score_mama
+name: calcu_obstetrica
 description: App to help medical industry to enhance their response time to specific events.
 
 # The following defines the version and build number for your application.
@@ -28,6 +28,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
   rxdart: ^0.23.1
+  flutter_native_admob: ^2.1.0
+  firebase_admob: ^0.9.3+2
 
 
 dev_dependencies:

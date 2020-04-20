@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:score_mama/src/bloc/bloc_provider.dart';
-import 'package:score_mama/src/providers/data_provider.dart';
-import 'package:score_mama/src/widgets/results_card_widget.dart';
+import 'package:calcu_obstetrica/src/bloc/bloc_provider.dart';
+import 'package:calcu_obstetrica/src/providers/data_provider.dart';
+// import 'package:calcu_obstetrica/src/widgets/results_card_widget.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_controller.dart';
+import 'package:flutter_native_admob/native_admob_options.dart';
 
 class ScoreMama extends StatefulWidget {
   @override
@@ -13,9 +18,14 @@ class ScoreMama extends StatefulWidget {
 }
 
 class _ScoreMamaState extends State<ScoreMama> {
+  final _nativeAdController = NativeAdmobController();
+  double _nativeAdHeight = 0;
+  // Test ID
+  static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  StreamSubscription _subscription;
+
   bool _weeksEnabled;
   bool _altitud;
-  int scoreResult;
 
   List<dynamic> _frecuenciaCardiacaOptions = new List();
   List<dynamic> _frecuenciaCardiacaItems;
@@ -78,20 +88,40 @@ class _ScoreMamaState extends State<ScoreMama> {
     setState(() {});
   }
 
+  void _onStateChanged(AdLoadState state) {
+    switch (state) {
+      case AdLoadState.loading:
+        setState(() {
+          _nativeAdHeight = 0;
+        });
+        break;
+
+      case AdLoadState.loadCompleted:
+        setState(() {
+          _nativeAdHeight = 80;
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
   @override
   void initState() {
+    _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
     _loadData();
     _weeksEnabled = false;
     _altitud = false;
-    scoreResult = 0;
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _scrollController.dispose();
-  // }
+  @override
+  void dispose() {
+    _subscription.cancel();
+    _nativeAdController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,8 +138,9 @@ class _ScoreMamaState extends State<ScoreMama> {
             padding: EdgeInsets.all(20.0),
             child: Column(
               children: <Widget>[
-                _scoreResult(),
+                _scoreResult(bloc),
                 SizedBox(height: 20.0),
+                _createNativeAd(),
                 Expanded(
                   child: SingleChildScrollView(
                     child: _createInputs(bloc),
@@ -142,8 +173,8 @@ class _ScoreMamaState extends State<ScoreMama> {
     final topBox = Transform.rotate(
       angle: -pi / 4.0,
       child: Container(
-        width: 360.0,
-        height: 360.0,
+        width: 310.0,
+        height: 310.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(80.0),
             gradient: LinearGradient(colors: [
@@ -201,40 +232,107 @@ class _ScoreMamaState extends State<ScoreMama> {
     return Stack(
       children: <Widget>[
         gradientBackground,
-        Positioned(top: -120.0, child: topBox),
-        Positioned(top: 300.0, left: -100.0, child: leftBox),
-        Positioned(top: 350.0, right: -100.0, child: rightBox),
-        Positioned(left: -60.0, bottom: -130.0, child: bottomBox),
+        Positioned(top: -100.0, left: -50.0, child: topBox),
+        Positioned(top: 400.0, left: -100.0, child: leftBox),
+        // Positioned(top: 350.0, right: -100.0, child: rightBox),
+        Positioned(right: -160.0, bottom: -100.0, child: bottomBox),
       ],
     );
   }
 
-  Widget _scoreResult() {
+  Widget _scoreResult(ScoreMamaBloc bloc) {
+    return StreamBuilder<int>(
+      stream: bloc.scoreMamaStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (bloc.scoreMama == null) {
+          bloc.changeScoreMama(0);
+        }
+        return GestureDetector(
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                decoration: BoxDecoration(
+                  color: _getScoreboxColor(bloc.scoreMama),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          'Resultado',
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                        Icon(
+                          Icons.arrow_forward_ios,
+                          color: Theme.of(context).textTheme.title.color,
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 10.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                      textBaseline: TextBaseline.alphabetic,
+                      children: <Widget>[
+                        Text(
+                          bloc.scoreMama.toString(),
+                          style: TextStyle(
+                            fontSize: 60.0,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).textTheme.title.color,
+                          ),
+                        ),
+                        Text(
+                          'puntos',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Theme.of(context).textTheme.title.color,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          onTap: () {
+            Navigator.pushNamed(context, 'actions');
+          },
+        );
+      },
+    );
+  }
+
+  Widget _createNativeAd() {
     return Container(
-      child: ResultsCard(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: <Widget>[
-            Text(
-              scoreResult.toString(),
-              style: TextStyle(
-                fontSize: 60.0,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).textTheme.title.color,
-              ),
+      height: _nativeAdHeight,
+      padding: EdgeInsets.all(20.0),
+      margin: EdgeInsets.only(bottom: (_nativeAdHeight * 4 / 16)),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(255, 255, 255, 0.6),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(0.0),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: NativeAdmob(
+            error: Text('Error al cargar el anuncio'),
+            adUnitID: _nativeUnitID,
+            controller: _nativeAdController,
+            options: NativeAdmobOptions(
+              showMediaContent: false,
+              ratingColor: Colors.amberAccent,
             ),
-            Text(
-              'puntos',
-              style: TextStyle(
-                fontSize: 20.0,
-                color: Theme.of(context).textTheme.title.color,
-              ),
-            ),
-          ],
+          ),
         ),
-        'Resultado',
       ),
     );
   }
@@ -642,8 +740,20 @@ class _ScoreMamaState extends State<ScoreMama> {
           .where((item) => item['option'] == bloc.proteinuria ? true : false)
           .toList()[0]['score'];
     }
-    setState(() {
-      scoreResult = score;
-    });
+    bloc.changeScoreMama(score);
+  }
+
+  Color _getScoreboxColor(int scoreMama) {
+    if (scoreMama == 0) {
+      return Color.fromRGBO(190, 248, 253, 0.6);
+    } else if (scoreMama == 1) {
+      return Color.fromRGBO(255, 189, 189, 0.7);
+    } else if (scoreMama >= 2 && scoreMama <= 4) {
+      return Color.fromRGBO(255, 148, 102, 0.7);
+    } else if (scoreMama >= 5) {
+      return Color.fromRGBO(243, 86, 39, 0.7);
+    } else {
+      return Color.fromRGBO(255, 255, 255, 0.7);
+    }
   }
 }
