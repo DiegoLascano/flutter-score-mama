@@ -7,7 +7,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Obstetricia"
+        android:label="Calculadora Obstétrica"
         android:icon="@mipmap/launcher_icon">
 
         <!-- Sample AdMob App ID: ca-app-pub-3940256099942544~3347511713 -->
