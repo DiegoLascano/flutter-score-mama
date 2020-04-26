@@ -20,8 +20,11 @@ class ScoreMama extends StatefulWidget {
 class _ScoreMamaState extends State<ScoreMama> {
   final _nativeAdController = NativeAdmobController();
   double _nativeAdHeight = 0;
-  // Test ID
-  static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Test Native ID
+  // static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Native Id
+  static const _nativeUnitID = "ca-app-pub-1500612778036594/8601497563";
+
   StreamSubscription _subscription;
 
   bool _weeksEnabled;
@@ -695,11 +698,11 @@ class _ScoreMamaState extends State<ScoreMama> {
       stream: bloc.formValidStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return Container(
+          width: double.infinity,
           margin: EdgeInsets.only(top: 15.0),
           child: RaisedButton(
             padding: EdgeInsets.symmetric(horizontal: 80.0, vertical: 15.0),
-            child:
-                Text('Calcular Score Mamá', style: TextStyle(fontSize: 16.0)),
+            child: Text('Calcular', style: TextStyle(fontSize: 16.0)),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15.0)),
             elevation: 0.0,

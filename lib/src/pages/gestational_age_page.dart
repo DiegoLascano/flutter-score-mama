@@ -19,8 +19,10 @@ class GestationalAge extends StatefulWidget {
 class _GestationalAgeState extends State<GestationalAge> {
   final _nativeAdController = NativeAdmobController();
   double _nativeAdHeight = 0;
-  // Test ID
-  static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Test Native ID
+  // static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Native Id
+  static const _nativeUnitID = "ca-app-pub-1500612778036594/4510849943";
 
   StreamSubscription _subscription;
 

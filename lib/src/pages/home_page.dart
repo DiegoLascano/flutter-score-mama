@@ -22,19 +22,30 @@ class _HomePageState extends State<HomePage> {
 
   StreamSubscription _subscription;
 
-  // Test ID
-  static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
-  // Native 2 Id
-  // static const _nativeUnitID = "ca-app-pub-1500612778036594/5687730085";
+  static const _appID = 'ca-app-pub-1500612778036594~9631562102';
 
-  // Test ID
-  static const _interstitialUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Test Native ID
+  // static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
+  // Native Id
+  static const _nativeUnitID = "ca-app-pub-1500612778036594/4904126837";
+
+  // Test Interstitial ID
+  // static const _interstitialUnitID = "ca-app-pub-3940256099942544/8135179316";
   // Interstitial ad ID
-  // static const _interstitialUnitID = "ca-app-pub-1500612778036594/4589436680";
+  static const _interstitialUnitID = "ca-app-pub-1500612778036594/9248418728";
 
-  static MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+  static MobileAdTargetingInfo _targetingInfo = MobileAdTargetingInfo(
     testDevices: testDevice != null ? <String>[testDevice] : null,
-    keywords: <String>['medico', 'doctor', 'score'],
+    keywords: <String>[
+      'medical',
+      'medico',
+      'doctor',
+      'score',
+      'mama',
+      'gestacional',
+      'gestational',
+      'calculator'
+    ],
     // contentUrl: 'https://flutter.io',
     childDirected: false,
     nonPersonalizedAds: true,
@@ -45,21 +56,19 @@ class _HomePageState extends State<HomePage> {
   final List<Map<String, String>> tests = [
     {
       'title': 'Score Mamá',
-      'description': 'Esta es la descripción para el test Score Mamá.'
+      'description': 'Calcula el valor Score Mamá para tomar decisiones.'
     },
     {
       'title': 'Edad Gestacional',
-      'description':
-          'Calcula de forma rápida la edad gestacional y la fecha probable de parto.'
+      'description': 'Calcula la edad gestacional y la fecha probable de parto.'
     },
   ];
 
   InterstitialAd createInterstitialAd() {
     return InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
-      targetingInfo: targetingInfo,
+      adUnitId: _interstitialUnitID,
+      targetingInfo: _targetingInfo,
       listener: (MobileAdEvent event) {
-        // print("InterstitialAd event $event");
         if (event == MobileAdEvent.closed) {
           _interstitialAd?.dispose();
           _interstitialAd = createInterstitialAd()..load();
@@ -90,7 +99,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+    FirebaseAdMob.instance.initialize(appId: _appID);
     _interstitialAd?.dispose();
     _interstitialAd = createInterstitialAd()..load();
     _subscription = _nativeAdController.stateChanged.listen(_onStateChanged);
@@ -244,7 +253,7 @@ class _HomePageState extends State<HomePage> {
         TableRow(
           children: [
             _createTestButton(context, 'score_mama', Colors.blue[800],
-                Icons.add_alert, tests[0]),
+                'scoreMama.jpeg', tests[0]),
           ],
         ),
         TableRow(
@@ -256,7 +265,7 @@ class _HomePageState extends State<HomePage> {
         TableRow(
           children: [
             _createTestButton(context, 'gestational_age', Colors.teal[800],
-                Icons.calendar_today, tests[1]),
+                'gestacional.jpeg', tests[1]),
             // _createTestButton(context, '', Colors.blueGrey[800],
             //     Icons.insert_photo, 'En desarrollo'),
             // _createTestButton(context, '', Colors.blueGrey[800],
@@ -268,15 +277,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _createTestButton(
-      BuildContext context, routeName, Color color, IconData icon, Map test) {
-    final _screenSize = MediaQuery.of(context).size;
+      BuildContext context, routeName, Color color, String image, Map test) {
     return GestureDetector(
       child: Container(
         height: 160.0,
         margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
         decoration: BoxDecoration(
           color: Color.fromRGBO(255, 255, 255, 0.6),
-          // color: Color.fromRGBO(98, 125, 152, 0.7),
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: ClipRRect(
@@ -285,37 +292,45 @@ class _HomePageState extends State<HomePage> {
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
             child: Row(children: <Widget>[
               Container(
-                width: _screenSize.width * 0.4,
-                child: CircleAvatar(
-                  backgroundColor: color,
-                  radius: 45.0,
-                  child: Icon(icon, color: Colors.white, size: 40.0),
+                padding: EdgeInsets.fromLTRB(20.0, 0, 10.0, 0.0),
+                child: Image.asset(
+                  'assets/images/$image',
+                  width: 100.0,
+                  height: 100.0,
                 ),
+                // child: CircleAvatar(
+                //   backgroundColor: color,
+                //   radius: 45.0,
+                //   // child: Icon(icon, color: Colors.white, size: 40.0),
+                //   child: Image.asset('assets/images/ScoreMama.jpeg'),
+                // ),
               ),
-              Container(
-                width: _screenSize.width * 0.5,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      test['title'],
-                      style: TextStyle(
+              Expanded(
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(10.0, 0, 20.0, 0.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        test['title'],
+                        style: TextStyle(
+                            color: color,
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 20.0),
+                      Text(
+                        test['description'],
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 5,
+                        style: TextStyle(
                           color: color,
                           fontSize: 16.0,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 20.0),
-                    Text(
-                      test['description'],
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 5,
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 16.0,
-                      ),
-                    )
-                  ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ]),
