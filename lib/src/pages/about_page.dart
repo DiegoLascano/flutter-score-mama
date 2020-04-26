@@ -299,8 +299,15 @@ class AboutPage extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
+                        text: 'Calculadora Obstétrica ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.underline,
+                            decorationThickness: 2.0),
+                      ),
+                      TextSpan(
                         text:
-                            'Calculadora Obstétrica es una aplicación desarrollada por médicos y diseñada para médicos, misma que se encuentra activamente en desarrollo, y próximamente se actualizará con más herramientas que faciliten las tareas de todo el personal de la salud.',
+                            'es una aplicación desarrollada por médicos y diseñada para médicos, misma que se encuentra activamente en desarrollo, y próximamente se actualizará con más herramientas que faciliten las tareas de todo el personal de la salud.',
                       ),
                     ]),
               ),
