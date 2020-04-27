@@ -133,6 +133,9 @@ class _ScoreMamaState extends State<ScoreMama> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Score Mamá'),
+        actions: <Widget>[
+          _resetFields(bloc),
+        ],
       ),
       body: Stack(
         children: <Widget>[
@@ -154,6 +157,29 @@ class _ScoreMamaState extends State<ScoreMama> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _resetFields(ScoreMamaBloc bloc) {
+    return IconButton(
+      icon: Icon(Icons.refresh),
+      onPressed: () {
+        bloc.changeScoreMama(null);
+        bloc.changeFrecuenciaCardiaca(null);
+        bloc.changePresionSistolica(null);
+        bloc.changePresionDiastolica(null);
+        bloc.changeFrecuenciaRespiratoria(null);
+        bloc.changeTemperatura(null);
+        bloc.changeSaturacion(null);
+        bloc.changeConciencia(null);
+        bloc.changeProteinuria(null);
+        bloc.changeSemanas(false);
+        bloc.changeEstablecimiento(null);
+        setState(() {
+          _weeksEnabled = false;
+          _altitud = false;
+        });
+      },
     );
   }
 
