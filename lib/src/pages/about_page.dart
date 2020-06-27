@@ -144,7 +144,7 @@ class AboutPage extends StatelessWidget {
                     ),
                     children: [
                       TextSpan(
-                        text: 'nextechdevelopment@gmail.com',
+                        text: 'nextech.development@gmail.com',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                         ),

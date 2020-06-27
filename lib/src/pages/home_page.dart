@@ -124,7 +124,9 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
+                // SizedBox(height: 30.0),
                 _header(context),
+                // SizedBox(height: 100.0),
                 _testButtons(context),
               ],
             ),
@@ -259,17 +261,12 @@ class _HomePageState extends State<HomePage> {
         TableRow(
           children: [
             _createNativeAd(),
-            // Container(),
           ],
         ),
         TableRow(
           children: [
             _createTestButton(context, 'gestational_age', Colors.teal[800],
                 'gestacional.jpeg', tests[1]),
-            // _createTestButton(context, '', Colors.blueGrey[800],
-            //     Icons.insert_photo, 'En desarrollo'),
-            // _createTestButton(context, '', Colors.blueGrey[800],
-            //     Icons.insert_photo, 'En desarrollo'),
           ],
         ),
       ],

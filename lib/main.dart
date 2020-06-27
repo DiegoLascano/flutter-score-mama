@@ -8,19 +8,19 @@ import 'package:calcu_obstetrica/src/routes/routes.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  final MaterialColor buttonTextColor = const MaterialColor(
-    0xFF14919B,
+  final MaterialColor mainSplash = const MaterialColor(
+    0xFF079A82,
     const <int, Color>{
-      50: const Color(0xFF14919B),
-      100: const Color(0xFF14919B),
-      200: const Color(0xFF14919B),
-      300: const Color(0xFF14919B),
-      400: const Color(0xFF14919B),
-      500: const Color(0xFF14919B),
-      600: const Color(0xFF14919B),
-      700: const Color(0xFF14919B),
-      800: const Color(0xFF14919B),
-      900: const Color(0xFF14919B),
+      50: const Color(0xFFF0FCF9),
+      100: const Color(0xFFC6F7E9),
+      200: const Color(0xFF8EEDD1),
+      300: const Color(0xFF5FE3C0),
+      400: const Color(0xFF2DCCA7),
+      500: const Color(0xFF17B897),
+      600: const Color(0xFF079A82),
+      700: const Color(0xFF048271),
+      800: const Color(0xFF016457),
+      900: const Color(0xFF004440),
     },
   );
 
@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
         initialRoute: 'navigation_page',
         routes: getApplicationRoutes(),
         theme: ThemeData(
-          primaryColor: Color(0xFF14919B),
-          accentColor: Color(0xFF14919B),
-          primarySwatch: buttonTextColor,
+          primaryColor: mainSplash[600],
+          accentColor: mainSplash[600],
+          primarySwatch: mainSplash,
           textTheme: TextTheme(
             title: TextStyle(
                 color: Color(0xFF323F4B),

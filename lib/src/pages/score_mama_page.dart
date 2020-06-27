@@ -7,6 +7,7 @@ import 'dart:math';
 
 import 'package:calcu_obstetrica/src/bloc/bloc_provider.dart';
 import 'package:calcu_obstetrica/src/providers/data_provider.dart';
+
 // import 'package:calcu_obstetrica/src/widgets/results_card_widget.dart';
 import 'package:flutter_native_admob/flutter_native_admob.dart';
 import 'package:flutter_native_admob/native_admob_controller.dart';
@@ -20,6 +21,7 @@ class ScoreMama extends StatefulWidget {
 class _ScoreMamaState extends State<ScoreMama> {
   final _nativeAdController = NativeAdmobController();
   double _nativeAdHeight = 0;
+
   // Test Native ID
   // static const _nativeUnitID = "ca-app-pub-3940256099942544/8135179316";
   // Native Id
@@ -32,6 +34,8 @@ class _ScoreMamaState extends State<ScoreMama> {
 
   List<dynamic> _frecuenciaCardiacaOptions = new List();
   List<dynamic> _frecuenciaCardiacaItems;
+
+  String _frecuenciaCardiacaSelected;
 
   List<dynamic> _presionSistolicaOptions = new List();
   List<dynamic> _presionSistolicaItems;
@@ -55,6 +59,8 @@ class _ScoreMamaState extends State<ScoreMama> {
   List<dynamic> _proteinuriaItems;
 
   void _loadData() async {
+    _frecuenciaCardiacaSelected = '';
+
     _frecuenciaCardiacaItems = await dataProvider.loadFrecuenciaCardiaca();
     _frecuenciaCardiacaOptions =
         _frecuenciaCardiacaItems.map((item) => item['option']).toList();
@@ -443,7 +449,7 @@ class _ScoreMamaState extends State<ScoreMama> {
               _altitud = value;
             });
           },
-        )
+        ),
       ],
     );
   }
